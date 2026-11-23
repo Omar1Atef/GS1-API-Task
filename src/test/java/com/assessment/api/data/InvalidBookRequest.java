@@ -2,7 +2,6 @@ package com.assessment.api.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/** One row of {@code testdata/invalid-book-requests.json}. */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InvalidBookRequest {
 

@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Single source of truth for environment configuration.
- * Values come from {@code config.properties} and can be overridden at runtime
- * with system properties, e.g. {@code -Dapi.base.uri=https://staging.example.com}.
- */
+
 public final class Configuration {
 
     private static final String CONFIG_FILE = "config.properties";
@@ -44,5 +40,9 @@ public final class Configuration {
 
     public static String basePath() {
         return get("api.base.path");
+    }
+
+    public static boolean logAll() {
+        return Boolean.parseBoolean(get("api.log.all"));
     }
 }

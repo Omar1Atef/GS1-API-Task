@@ -6,10 +6,7 @@ import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Common HTTP plumbing for every service object. Subclasses declare only their
- * endpoints and the calls they expose.
- */
+
 public abstract class BaseService {
 
     protected RequestSpecification request() {

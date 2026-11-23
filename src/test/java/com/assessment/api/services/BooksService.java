@@ -3,10 +3,7 @@ package com.assessment.api.services;
 import com.assessment.api.models.Book;
 import io.restassured.response.Response;
 
-/**
- * Service object for the Books resource. The tests speak in terms of these
- * methods, never in terms of URLs or HTTP verbs.
- */
+
 public class BooksService extends BaseService {
 
     private static final String BOOKS = "/Books";

@@ -21,11 +21,17 @@ Prerequisites: JDK 17+, Maven 3.8+ and outbound internet access.
 mvn clean test
 ```
 
-Point the suite at another environment without changing code:
+Point the suite at another environment, or print every request and response, without
+changing code:
 
 ```bash
 mvn clean test -Dapi.base.uri=https://fakerestapi.azurewebsites.net -Dapi.base.path=/api/v1
+mvn clean test -Dapi.log.all=false
 ```
+
+Every call is logged by default — method, URI, headers and both bodies, pretty-printed — so a
+run shows exactly what the API returned. Set `api.log.all=false` (or `-Dapi.log.all=false`) for
+a quiet run; failing calls are logged either way.
 
 Reports are written to `target/surefire-reports/`.
 
@@ -66,9 +72,10 @@ src/test/resources/
   the `status` field in the error body.
 - **Data-driven** — payloads and negative cases live in `testdata/*.json` and are bound to
   POJOs; adding a case is a JSON edit.
-- **Diagnosability** — one line in `BaseApiTest` makes REST Assured log the full request and
-  response whenever an assertion fails, so a red report always carries the evidence while a
-  green run stays quiet.
+- **Diagnosability** — `BaseApiTest` is the single place logging is configured. A failing
+  assertion always logs the full request and response, so a red report carries its own
+  evidence, and `api.log.all` (default `true`) logs every call so the traffic is visible
+  without re-running anything.
 
 ## Observed API behaviour
 
@@ -98,8 +105,5 @@ Kept out because nothing in the required coverage needs them:
   state (see above), so there is nothing meaningful to assert. They were written, found to be
   unreachable from any test, and removed — adding them back is three lines on top of
   `BaseService` the day a test needs them.
-- **No logging toggle in `config.properties`.** Logging had been configured in two places with
-  a branch in each; log-on-failure is the right behaviour in both CI and local runs, so the
-  branch, the second code path and the config key all went.
 - **No POJO builders, no Lombok, no test-data factories.** Two payloads read from JSON do not
   justify any of it.
