@@ -1,13 +1,14 @@
 package com.assessment.api.base;
 
-import com.assessment.api.config.Configuration;
 import com.assessment.api.services.BooksService;
 import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import org.testng.annotations.BeforeClass;
 
-
+/**
+ * Shared test setup. A failing assertion logs the full request and response, so a red report
+ * carries its own evidence; {@code api.log.all} controls logging of passing calls and is
+ * applied in {@link com.assessment.api.spec.Specs}, per request rather than globally.
+ */
 public abstract class BaseApiTest {
 
     protected BooksService booksService;
@@ -15,9 +16,6 @@ public abstract class BaseApiTest {
     @BeforeClass(alwaysRun = true)
     public void setUp() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        if (Configuration.logAll()) {
-            RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-        }
         booksService = new BooksService();
     }
 }
